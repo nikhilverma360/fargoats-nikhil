@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { MetricCards } from './metric-cards'
 import { AnalyticsCharts } from './analytics-chart'
-import { DatePickerWithRange } from '@/components/ui/date-picker-with-range'
 import { generateMockData } from '@/lib/analytics'
 import { AnalyticsData } from '@/types/analytics'
 
@@ -32,7 +31,7 @@ export function AnalyticsDashboard() {
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Analytics Dashboard</h1>
       <div className="mb-6">
-        <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+        {/* You can replace the Calendar component with another date range picker if needed */}
       </div>
       <MetricCards latestData={latestData} />
       <AnalyticsCharts data={filteredData} />

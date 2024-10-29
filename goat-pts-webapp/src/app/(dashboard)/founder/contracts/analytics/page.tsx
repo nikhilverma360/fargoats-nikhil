@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { CalendarIcon } from 'lucide-react';
 import { BarChart, LineChart, Bar, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-import { DateRange } from '@/components/ui/date-picker-with-range';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DatePickerWithRange } from '@/components/ui/date-picker-with-range';
@@ -27,12 +26,18 @@ const generateMockData = (days: number) => {
 const mockData = generateMockData(365);
 
 export default function AnalyticsPage() {
-    const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    const [dateRange, setDateRange] = useState<{ from: Date; to?: Date }>({
         from: new Date(new Date().setDate(new Date().getDate() - 30)),
         to: new Date(),
     });
     const [activeTab, setActiveTab] = useState('tvl');
     
+    const handleDateChange = (date: { from: Date; to?: Date } | undefined) => {
+        if (date) {
+            setDateRange(date);
+        }
+    };
+
     const filteredData = mockData.filter((item) => {
         const itemDate = new Date(item.date);
         return dateRange?.from && dateRange?.to && itemDate >= dateRange.from && itemDate <= dateRange.to;
@@ -44,7 +49,7 @@ export default function AnalyticsPage() {
         <div className="container mx-auto p-6">
             <h1 className="text-3xl font-bold mb-6">Analytics Dashboard</h1>
             <div className="mb-6">
-                <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+                <DatePickerWithRange date={dateRange} setDate={handleDateChange} />
             </div>
             <div className="grid gap-6 lg:grid-cols-4">
                 <div className="space-y-6 lg:col-span-1">
