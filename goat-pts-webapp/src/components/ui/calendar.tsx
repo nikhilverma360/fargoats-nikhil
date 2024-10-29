@@ -1,19 +1,14 @@
 "use client"
 import * as React from "react"
-import type { CustomComponents } from 'react-day-picker'
+import { DayPicker, type CustomComponents } from 'react-day-picker'
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import { DayPicker } from 'react-day-picker'
+// import { DayPicker } from 'react-day-picker';
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
 import 'react-day-picker'
-declare module 'react-day-picker' {
-  interface CustomComponents {
-    IconPrevious?: React.ComponentType<any>
-    IconNext?: React.ComponentType<any>
-  }
-}
+
 
 interface CalendarProps {
   className?: string;
@@ -68,9 +63,9 @@ export function Calendar(props: CalendarProps) {
         ...props.classNames,
       }}
       components={{
-        IconPrevious: () => <ChevronLeftIcon className="h-4 w-4" />,
-        IconNext: () => <ChevronRightIcon className="h-4 w-4" />,
-      } as CustomComponents}
+        IconLeft: () => <ChevronLeftIcon className="h-4 w-4" />,
+        IconRight: () => <ChevronRightIcon className="h-4 w-4" />,
+      }}
     />
   )
 }
