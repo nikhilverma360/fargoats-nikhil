@@ -28,7 +28,7 @@ const data = {
                 },
                 {
                     title: 'Analytics',
-                    url: '#',
+                    url: '/founder/contracts/analytics',
                 },
             ],
         },
@@ -91,7 +91,7 @@ const data = {
         },
         {
             name: 'Quests',
-            url: '#',
+            url: '/founder/submit-quest',
             icon: PieChart,
         },
         {

@@ -1,24 +1,32 @@
 "use client"
-
 import * as React from "react"
+import type { CustomComponents } from 'react-day-picker'
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import { DayPicker } from "react-day-picker"
+import { DayPicker } from 'react-day-picker'
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+import 'react-day-picker'
+declare module 'react-day-picker' {
+  interface CustomComponents {
+    IconPrevious?: React.ComponentType<any>
+    IconNext?: React.ComponentType<any>
+  }
+}
 
-function Calendar({
-  className,
-  classNames,
-  showOutsideDays = true,
-  ...props
-}: CalendarProps) {
+interface CalendarProps {
+  className?: string;
+  classNames?: Record<string, string>;
+  showOutsideDays?: boolean;
+  mode?: "single" | "multiple" | "range";
+}
+
+export function Calendar(props: CalendarProps) {
   return (
     <DayPicker
-      showOutsideDays={showOutsideDays}
-      className={cn("p-3", className)}
+      showOutsideDays={props.showOutsideDays}
+      className={cn("p-3", props.className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
@@ -57,16 +65,12 @@ function Calendar({
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
-        ...classNames,
+        ...props.classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
-        IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
-      }}
-      {...props}
+        IconPrevious: () => <ChevronLeftIcon className="h-4 w-4" />,
+        IconNext: () => <ChevronRightIcon className="h-4 w-4" />,
+      } as CustomComponents}
     />
   )
 }
-Calendar.displayName = "Calendar"
-
-export { Calendar }

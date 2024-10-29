@@ -1,7 +1,5 @@
 'use client'
-
 import { useState } from 'react'
-import { DateRange } from 'react-day-picker'
 import { MetricCards } from './metric-cards'
 import { AnalyticsCharts } from './analytics-chart'
 import { DatePickerWithRange } from '@/components/ui/date-picker-with-range'
@@ -10,8 +8,13 @@ import { AnalyticsData } from '@/types/analytics'
 
 const mockData = generateMockData(365)
 
+type Range = {
+  from: Date
+  to: Date
+} | undefined
+
 export function AnalyticsDashboard() {
-  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+  const [dateRange, setDateRange] = useState<Range>({
     from: new Date(new Date().setDate(new Date().getDate() - 30)),
     to: new Date(),
   })

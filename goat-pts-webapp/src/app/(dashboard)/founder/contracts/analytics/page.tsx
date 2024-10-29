@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { CalendarIcon } from 'lucide-react';
 import { BarChart, LineChart, Bar, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-import { DateRange } from 'react-day-picker';
+import { DateRange } from '@/components/ui/date-picker-with-range';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DatePickerWithRange } from '@/components/ui/date-picker-with-range';
