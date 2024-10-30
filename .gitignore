@@ -20,7 +20,8 @@ node_modules
 
 # production
 /build
-
+/RUST/target
+/RUST/Cargo.lock
 # misc
 .DS_Store
 *.pem
@@ -39,3 +40,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+RUST/farGoat/target/.rustc_info.json
+RUST/farGoat/target/*

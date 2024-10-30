@@ -1,7 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['picsum.photos'],
+        remotePatterns: [
+            {
+                hostname: 'picsum.photos',
+            },
+        ],
+    },
+    redirects: async () => {
+        return [
+            {
+                source: '/',
+                destination: '/ecosystem/projects',
+                permanent: true,
+            },
+        ];
     },
 };
 
