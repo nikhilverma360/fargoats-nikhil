@@ -33,8 +33,8 @@ const data = {
             ],
         },
         {
-            title: 'Quests',
-            url: '/founder/submit-quest',
+            title: 'Create Quest',
+            url: '/founder/create-quest',
             icon: PieChart,
         },
         {
@@ -94,6 +94,11 @@ const data = {
             name: 'Quests',
             url: '/ecosystem/quests',
             icon: PieChart,
+        },
+        {
+            name: 'Leaderboard',
+            url: '/ecosystem/leaderboard',
+            icon: Map,
         },
         {
             name: 'Profile',
