@@ -5,6 +5,8 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { Fragment } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function DashboardLayout({
     children,
@@ -21,13 +23,31 @@ export default function DashboardLayout({
                         <Separator orientation="vertical" className="mr-2 h-4" />
                         <Breadcrumb>
                             <BreadcrumbList>
-                                <BreadcrumbItem className="hidden md:block">
-                                    <BreadcrumbLink href="#">Contracts</BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator className="hidden md:block" />
-                                <BreadcrumbItem>
-                                    <BreadcrumbPage>Genesis</BreadcrumbPage>
-                                </BreadcrumbItem>
+                                {usePathname()
+                                    .split('/')
+                                    .filter(Boolean)
+                                    .map((segment, index, array) => (
+                                        <Fragment key={index}>
+                                            <BreadcrumbItem>
+                                                {index === array.length - 1 ? (
+                                                    <BreadcrumbPage>
+                                                        {segment
+                                                            .split('-')
+                                                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                                            .join(' ')}
+                                                    </BreadcrumbPage>
+                                                ) : (
+                                                    <BreadcrumbLink href={`/${array.slice(0, index + 1).join('/')}`}>
+                                                        {segment
+                                                            .split('-')
+                                                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                                            .join(' ')}
+                                                    </BreadcrumbLink>
+                                                )}
+                                            </BreadcrumbItem>
+                                            {index < array.length - 1 && <BreadcrumbSeparator />}
+                                        </Fragment>
+                                    ))}
                             </BreadcrumbList>
                         </Breadcrumb>
                     </div>
