@@ -33,6 +33,11 @@ const data = {
             ],
         },
         {
+            title: 'Quests',
+            url: '/founder/submit-quest',
+            icon: PieChart,
+        },
+        {
             title: 'Documentation',
             url: '#',
             icon: BookOpen,
@@ -91,7 +96,7 @@ const data = {
         },
         {
             name: 'Quests',
-            url: '/founder/submit-quest',
+            url: '/ecosystem/quests',
             icon: PieChart,
         },
         {
