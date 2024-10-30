@@ -37,29 +37,30 @@ const data = {
             url: '/founder/create-quest',
             icon: PieChart,
         },
-        {
-            title: 'Documentation',
-            url: '/founder/documentation',
-            icon: BookOpen,
-            items: [
-                {
-                    title: 'Introduction',
-                    url: '#',
-                },
-                {
-                    title: 'Get Started',
-                    url: '#',
-                },
-                {
-                    title: 'Tutorials',
-                    url: '#',
-                },
-                {
-                    title: 'Changelog',
-                    url: '#',
-                },
-            ],
-        },
+        // {
+        //     title: 'Documentation',
+        //     url: 'https://docs.goat.network/',
+        //     icon: BookOpen,
+        //     items: [
+        //         {
+        //             title: 'Introduction',
+        //             url: 'https://docs.goat.network/',
+        //             TargetEvent:`_blank`
+        //         },
+        //         {
+        //             title: 'Get Started',
+        //             url: 'https://docs.goat.network/',
+        //         },
+        //         {
+        //             title: 'Tutorials',
+        //             url: 'https://docs.goat.network/',
+        //         },
+        //         {
+        //             title: 'Changelog',
+        //             url: 'https://docs.goat.network/',
+        //         },
+        //     ],
+        // },
         {
             title: 'Settings',
             url: '/founder/settings',
