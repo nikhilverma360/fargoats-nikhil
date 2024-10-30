@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { BookOpen, Bot, Command, Frame, LifeBuoy, Map, PieChart, Send, Settings2, SquareTerminal, Volleyball } from 'lucide-react';
+import { BookOpen, Bot, Command, Frame, LifeBuoy, Map, PieChart, Send, Settings2, SquareTerminal, Volleyball, User } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
 import { NavProjects } from '@/components/nav-projects';
@@ -18,7 +18,7 @@ const data = {
     navMain: [
         {
             title: 'Contracts',
-            url: '#',
+            url: '/founder/contracts/genesis',
             icon: SquareTerminal,
             isActive: true,
             items: [
@@ -33,8 +33,13 @@ const data = {
             ],
         },
         {
+            title: 'Quests',
+            url: '/founder/submit-quest',
+            icon: PieChart,
+        },
+        {
             title: 'Documentation',
-            url: '#',
+            url: '/founder/documentation',
             icon: BookOpen,
             items: [
                 {
@@ -57,16 +62,12 @@ const data = {
         },
         {
             title: 'Settings',
-            url: '#',
+            url: '/founder/settings',
             icon: Settings2,
             items: [
                 {
                     title: 'General',
-                    url: '#',
-                },
-                {
-                    title: 'Team',
-                    url: '#',
+                    url: '/founder/settings',
                 },
             ],
         },
@@ -91,18 +92,13 @@ const data = {
         },
         {
             name: 'Quests',
-            url: '/founder/submit-quest',
+            url: '/ecosystem/quests',
             icon: PieChart,
         },
         {
-            name: 'Points',
-            url: '#',
-            icon: Map,
-        },
-        {
-            name: 'Leaderboard',
-            url: '#',
-            icon: Map,
+            name: 'Profile',
+            url: '/ecosystem/profile',
+            icon: User,
         },
     ],
 };
