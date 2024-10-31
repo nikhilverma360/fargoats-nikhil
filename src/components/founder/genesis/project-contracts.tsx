@@ -11,7 +11,7 @@ export function ProjectContracts() {
 
     const handleAddAbi = () => {
         updateFormState({
-            abiList: [...formState.abiList, { abi: '', contractAddress: '' }],
+            abiList: [...formState.abiList, { abi: '', contractAddress: '', contractName: '' }],
         });
     };
 
@@ -21,7 +21,7 @@ export function ProjectContracts() {
         });
     };
 
-    const handleAbiChange = (index: number, field: 'abi' | 'contractAddress', value: string) => {
+    const handleAbiChange = (index: number, field: 'abi' | 'contractAddress' | 'contractName', value: string) => {
         const newAbiList = formState.abiList.map((item, i) => {
             if (i === index) {
                 return { ...item, [field]: value };
@@ -36,9 +36,31 @@ export function ProjectContracts() {
             <Label>ABI and Contract Address</Label>
             {formState.abiList.map((item, index) => (
                 <div key={index} className="flex gap-2">
-                    <Input type="file" onChange={(e) => handleAbiChange(index, 'abi', e.target.value)} accept=".json" required />
-                    <Input value={item.contractAddress} onChange={(e) => handleAbiChange(index, 'contractAddress', e.target.value)} placeholder="Contract Address" required />
-                    <Button type="button" variant="destructive" size="icon" onClick={() => handleRemoveAbi(index)} disabled={formState.abiList.length === 1}>
+                    <Input 
+                        value={item.contractName}
+                        onChange={(e) => handleAbiChange(index, 'contractName', e.target.value)}
+                        placeholder="Contract Name"
+                        required
+                    />
+                    <Input 
+                        type="file" 
+                        onChange={(e) => handleAbiChange(index, 'abi', e.target.value)} 
+                        accept=".json" 
+                        required 
+                    />
+                    <Input 
+                        value={item.contractAddress} 
+                        onChange={(e) => handleAbiChange(index, 'contractAddress', e.target.value)} 
+                        placeholder="Contract Address" 
+                        required 
+                    />
+                    <Button 
+                        type="button" 
+                        variant="destructive" 
+                        size="icon" 
+                        onClick={() => handleRemoveAbi(index)} 
+                        disabled={formState.abiList.length === 1}
+                    >
                         <Trash2 className="h-4 w-4" />
                         <span className="sr-only">Remove ABI</span>
                     </Button>

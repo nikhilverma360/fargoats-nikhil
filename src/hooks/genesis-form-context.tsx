@@ -11,7 +11,7 @@ export function ProjectFormProvider({ children }: { children: React.ReactNode })
         description: '',
         website: '',
         logo: null,
-        abiList: [{ abi: '', contractAddress: '' }],
+        abiList: [{ abi: '', contractAddress: '', contractName: '' }],
         tags: [],
     });
 
@@ -25,7 +25,7 @@ export function ProjectFormProvider({ children }: { children: React.ReactNode })
             description: '',
             website: '',
             logo: null,
-            abiList: [{ abi: '', contractAddress: '' }],
+            abiList: [{ abi: '', contractAddress: '', contractName: '' }],
             tags: [],
         });
     };

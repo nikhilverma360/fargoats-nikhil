@@ -3,7 +3,7 @@ interface ProjectFormState {
     description: string;
     website: string;
     logo: File | null;
-    abiList: Array<{ abi: string; contractAddress: string }>;
+    abiList: Array<{ abi: string; contractAddress: string; contractName: string }>;
     tags: string[];
 }
 
