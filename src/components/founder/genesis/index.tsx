@@ -5,7 +5,7 @@ import { ProjectBasicInfo } from './project-basic-info';
 import { ProjectLogo } from './project-logo';
 import { ProjectContracts } from './project-contracts';
 import { FormNavigation } from './form-navigation';
-import { ProjectFormProvider, useProjectForm } from './project-form-context';
+import { ProjectFormProvider, useProjectForm } from '../../../hooks/genesis-form-context';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 
