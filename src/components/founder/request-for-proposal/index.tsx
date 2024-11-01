@@ -9,7 +9,7 @@ import { ProjectFormProvider, useProjectForm } from '../../../hooks/genesis-form
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 
-export function ProjectCreationForm() {
+export function RequestForProposalForm() {
     const [step, setStep] = useState(1);
 
     const nextStep = () => setStep(step + 1);
