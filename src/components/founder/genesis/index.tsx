@@ -17,7 +17,7 @@ export function ProjectCreationForm() {
 
     return (
         <ProjectFormProvider>
-            <Card className="w-full max-w-3xl mx-auto">
+            <Card className="w-full max-w-3xl mx-auto"> 
                 <CardHeader>
                     <CardTitle>Create New Project</CardTitle>
                     <CardDescription>Fill in the details to create a new project on the GOAT network.</CardDescription>
