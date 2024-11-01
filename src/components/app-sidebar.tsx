@@ -18,13 +18,13 @@ const data = {
     navMain: [
         {
             title: 'Contracts',
-            url: '/founder/contracts/genesis',
+            url: '/founder/contracts/request-for-proposal',
             icon: SquareTerminal,
             isActive: true,
             items: [
                 {
-                    title: 'Genesis',
-                    url: '/founder/contracts/genesis',
+                    title: 'Request for Proposal',
+                    url: '/founder/contracts/request-for-proposal',
                 },
                 {
                     title: 'Analytics',
