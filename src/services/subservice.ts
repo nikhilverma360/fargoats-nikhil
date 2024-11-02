@@ -15,7 +15,7 @@ export interface TableData {
 }
 
 export class DataService {
-    private baseUrl = 'https://fargoat.eni6ma.co/api/chart';
+    private baseUrl = 'https://fargoat.eni6ma.co';
 
     async fetchChartData(): Promise<ChartData> {
         const response = await fetch(`${this.baseUrl}/api/chart`);
