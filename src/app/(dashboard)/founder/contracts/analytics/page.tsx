@@ -1,59 +1,43 @@
 'use client';
 
-import { useState } from 'react';
-import { CalendarIcon } from 'lucide-react';
-import { BarChart, LineChart, Bar, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { DatePickerWithRange } from '@/components/ui/date-picker-with-range';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { ChartData } from '@/services/subservice';
+import RealTimeChart from '@/components/founder/analytics/charts/RealTimeChart';
+import { pubSubService } from '@/services/pubsub.service';
 
-const generateMockData = (days: number) => {
-    const data = [];
-    const now = new Date();
-    for (let i = days; i > 0; i--) {
-        const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
-        data.push({
-            date: date.toISOString().split('T')[0],
-            tvl: Math.floor(1000000 + Math.random() * 1000000),
-            dau: Math.floor(5000 + Math.random() * 3000),
-            trx: Math.floor(50000 + Math.random() * 30000),
-        });
-    }
-    return data;
-};
-
-const mockData = generateMockData(365);
-
-export default function AnalyticsPage() {
+const AnalyticsPage = () => {
+    const [chartData, setChartData] = useState<ChartData[]>([]);
     const [dateRange, setDateRange] = useState<{ from: Date; to?: Date }>({
         from: new Date(new Date().setDate(new Date().getDate() - 30)),
         to: new Date(),
     });
     const [activeTab, setActiveTab] = useState('tvl');
-    
-    const handleDateChange = (date: { from: Date; to?: Date } | undefined) => {
-        if (date) {
-            setDateRange(date);
-        }
-    };
 
-    const filteredData = mockData.filter((item) => {
-        const itemDate = new Date(item.date);
-        return dateRange?.from && dateRange?.to && itemDate >= dateRange.from && itemDate <= dateRange.to;
-    });
+    useEffect(() => {
+        const subscription = pubSubService.subscribeToChartData((data) => {
+            setChartData(prevData => {
+                const newData = [...prevData, data].slice(-30);
+                return newData;
+            });
+        });
 
-    const latestData = filteredData[filteredData.length - 1] || { tvl: 0, dau: 0, trx: 0 };
+        return () => subscription.unsubscribe();
+    }, []);
+
+    const latestData = chartData[chartData.length - 1] || { tvl: 0, dau: 0, trx: 0 };
 
     return (
         <div className="container mx-auto p-6">
             <h1 className="text-3xl font-bold mb-6">Analytics Dashboard</h1>
             <div className="mb-6">
-                <DatePickerWithRange date={dateRange} setDate={handleDateChange} />
+                <RealTimeChart />
             </div>
             <div className="grid gap-6 lg:grid-cols-4">
                 <div className="space-y-6 lg:col-span-1">
-                    <MetricCard title="Total Value Locked (TVL)" value={`$${(latestData.tvl / 1000000).toFixed(2)}M`} change="+10%" />
+                    <MetricCard title="Total Value Locked (TVL)" value={`$${((latestData?.tvl ?? 0) / 1000000).toFixed(2)}M`} change="+10%" />
                     <MetricCard title="Daily Active Users (DAU)" value={latestData.dau.toLocaleString()} change="+5%" />
                     <MetricCard title="Daily Transactions (TRX)" value={latestData.trx.toLocaleString()} change="+7%" />
                 </div>
@@ -71,39 +55,56 @@ export default function AnalyticsPage() {
                             </TabsList>
                         </Tabs>
                         <div className="h-[270px]">
-                            <>
-                                {activeTab === 'dau' ? (
-                                    <BarChart data={filteredData}>
+                            {activeTab === 'dau' ? (
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={chartData}>
                                         <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="date" />
+                                        <XAxis 
+                                            dataKey="timestamp" 
+                                            tickFormatter={(tick) => new Date(tick * 1000).toLocaleDateString()} 
+                                        />
                                         <YAxis />
-                                        <Tooltip />
-                                        <Bar dataKey="dau" fill="var(--color-dau)" />
+                                        <Tooltip 
+                                            labelFormatter={(label) => new Date(label * 1000).toLocaleString()} 
+                                        />
+                                        <Bar dataKey="dau" fill="#FFFF00" /> {/* Yellow bars */}
                                     </BarChart>
-                                ) : (
-                                    <LineChart data={filteredData}>
+                                </ResponsiveContainer>
+                            ) : (
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart data={chartData}>
                                         <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="date" />
+                                        <XAxis 
+                                            dataKey="timestamp" 
+                                            tickFormatter={(tick) => new Date(tick * 1000).toLocaleDateString()} 
+                                        />
                                         <YAxis />
-                                        <Tooltip />
-                                        <Line type="monotone" dataKey={activeTab} stroke={`var(--color-${activeTab})`} strokeWidth={2} dot={false} />
+                                        <Tooltip 
+                                            labelFormatter={(label) => new Date(label * 1000).toLocaleString()} 
+                                        />
+                                        <Line
+                                            type="monotone"
+                                            dataKey={activeTab}
+                                            stroke="#FFFF00" // Yellow line
+                                            strokeWidth={2}
+                                            dot={{ fill: 'red', stroke: 'red', r: 4 }} // Red points
+                                        />
                                     </LineChart>
-                                )}
-                            </>
+                                </ResponsiveContainer>
+                            )}
                         </div>
                     </CardContent>
                 </Card>
             </div>
         </div>
     );
-}
+};
 
 function MetricCard({ title, value, change }: { title: string; value: string; change: string }) {
     return (
         <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">{title}</CardTitle>
-                <CalendarIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
                 <div className="text-2xl font-bold">{value}</div>
@@ -138,3 +139,5 @@ function getChartDescription(tab: string) {
             return '';
     }
 }
+
+export default AnalyticsPage;
