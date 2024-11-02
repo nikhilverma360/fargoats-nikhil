@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { CalendarIcon } from 'lucide-react';
-import { BarChart, LineChart, Bar, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+
+import { AnalyticsCharts } from '@/components/founder/analytics/analytics-chart';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DatePickerWithRange } from '@/components/ui/date-picker-with-range';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const generateMockData = (days: number) => {
     const data = [];
@@ -49,7 +50,7 @@ export default function AnalyticsPage() {
         <div className="container mx-auto p-6">
             <h1 className="text-3xl font-bold mb-6">Analytics Dashboard</h1>
             <div className="mb-6">
-                <DatePickerWithRange date={dateRange} setDate={handleDateChange} />
+                <AnalyticsCharts data={filteredData} />
             </div>
             <div className="grid gap-6 lg:grid-cols-4">
                 <div className="space-y-6 lg:col-span-1">
@@ -71,8 +72,8 @@ export default function AnalyticsPage() {
                             </TabsList>
                         </Tabs>
                         <div className="h-[270px]">
-                            <>
-                                {activeTab === 'dau' ? (
+                            {activeTab === 'dau' ? (
+                                <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={filteredData}>
                                         <CartesianGrid strokeDasharray="3 3" />
                                         <XAxis dataKey="date" />
@@ -80,7 +81,9 @@ export default function AnalyticsPage() {
                                         <Tooltip />
                                         <Bar dataKey="dau" fill="var(--color-dau)" />
                                     </BarChart>
-                                ) : (
+                                </ResponsiveContainer>
+                            ) : (
+                                <ResponsiveContainer width="100%" height="100%">
                                     <LineChart data={filteredData}>
                                         <CartesianGrid strokeDasharray="3 3" />
                                         <XAxis dataKey="date" />
@@ -88,8 +91,8 @@ export default function AnalyticsPage() {
                                         <Tooltip />
                                         <Line type="monotone" dataKey={activeTab} stroke={`var(--color-${activeTab})`} strokeWidth={2} dot={false} />
                                     </LineChart>
-                                )}
-                            </>
+                                </ResponsiveContainer>
+                            )}
                         </div>
                     </CardContent>
                 </Card>
@@ -103,7 +106,6 @@ function MetricCard({ title, value, change }: { title: string; value: string; ch
         <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">{title}</CardTitle>
-                <CalendarIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
                 <div className="text-2xl font-bold">{value}</div>
@@ -138,3 +140,4 @@ function getChartDescription(tab: string) {
             return '';
     }
 }
+6
