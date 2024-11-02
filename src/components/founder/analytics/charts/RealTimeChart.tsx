@@ -16,7 +16,6 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import {
-    ChartConfig,
     ChartContainer,
     ChartLegend,
     ChartLegendContent,
@@ -63,7 +62,11 @@ const RealTimeChart: React.FC = () => {
                 <CardDescription>Live data updates every 5 seconds</CardDescription>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={defaultChartConfig}>
+                <ChartContainer config={{
+                    tvl: {
+                        color: 'var(--color-primary)'
+                    }
+                }}>
                     <BarChart data={chartData} width={800} height={400} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                         <CartesianGrid vertical={false} />
                         <XAxis

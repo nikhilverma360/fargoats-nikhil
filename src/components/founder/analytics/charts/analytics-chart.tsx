@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { PubSubService } from '@/services/pubsub.service';
+import { pubSubService, PubSubService } from '@/services/pubsub.service';
 import { AnalyticsData } from '@/types/analytics';
 import { TVLChart } from './tvl-chart';
 import { DAUChart } from './dau-chart'; 
@@ -21,7 +21,7 @@ export function AnalyticsCharts({ data }: AnalyticsChartsProps) {
         });
 
         // Subscribe to updates
-        const subscription = PubSubService.subscribe('analyticsDataUpdate', (newData) => {
+        const subscription = pubSubService.subscribe('analyticsDataUpdate', (newData: any) => {
             console.log('Received updated analytics data:', newData);
         });
 
