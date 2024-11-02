@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import pubSubService from '@/services/pubsub.service';
+import { PubSubService } from '@/services/pubsub.service';
 import { AnalyticsData } from '@/types/analytics';
 import { TVLChart } from './tvl-chart';
 import { DAUChart } from './dau-chart'; 
@@ -21,12 +21,12 @@ export function AnalyticsCharts({ data }: AnalyticsChartsProps) {
         });
 
         // Subscribe to updates
-        const subscription = pubSubService.subscribe('analyticsDataUpdate', (newData) => {
+        const subscription = PubSubService.subscribe('analyticsDataUpdate', (newData) => {
             console.log('Received updated analytics data:', newData);
         });
 
         // Start random data generation every 5 seconds
-        pubSubService.startRandomData('analyticsDataUpdate', {
+        PubSubService.startRandomData('analyticsDataUpdate', {
             interval: 5000,
             dataType: 'number',
             generator: generateRandomAnalytics
@@ -34,7 +34,7 @@ export function AnalyticsCharts({ data }: AnalyticsChartsProps) {
 
         // Cleanup: stop data generation and unsubscribe
         return () => {
-            pubSubService.stopRandomData('analyticsDataUpdate');
+            PubSubService.stopRandomData('analyticsDataUpdate');
             subscription.unsubscribe();
         };
     }, []);
