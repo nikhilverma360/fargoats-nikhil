@@ -1,0 +1,7 @@
+{
+    "functions": {
+      "testdata/**/*.rs": {
+        "runtime": "vercel-rust@4.0.7"
+      }
+    }
+  }

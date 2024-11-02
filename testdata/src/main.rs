@@ -6,6 +6,9 @@ use std::time::Duration;
 use tokio::time::interval;
 use std::sync::{Arc, Mutex};
 
+use serde_json::json;
+use vercel_runtime::{run, Body, Error, Request, Response, StatusCode};
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 struct ChartData {
     timestamp: i64,
@@ -42,8 +45,9 @@ async fn get_table_data(data: web::Data<AppState>) -> HttpResponse {
     response
 }
 
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
+
+#[tokio::main]
+async fn main() -> Result<(), Error> {
     let chart_data = Arc::new(Mutex::new(ChartData {
         timestamp: 0,
         values: vec![],
@@ -81,20 +85,16 @@ async fn main() -> std::io::Result<()> {
         }
     });
 
-    let app_state = web::Data::new(AppState {
-        chart_data,
-        table_data
+    run(handler).await
+}
+
+pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
+    let response = json!({
+        "message": "你好，世界"
     });
 
-    HttpServer::new(move || {
-        App::new()
-            .wrap(Cors::permissive())
-            .wrap(actix_web::middleware::Logger::default())
-            .app_data(app_state.clone())
-            .route("/api/chart", web::get().to(get_chart_data))
-            .route("/api/table", web::get().to(get_table_data))
-    })
-    .bind("127.0.0.1:8080")?
-    .run()
-    .await
+    Ok(Response::builder()
+        .status(StatusCode::OK)
+        .header("Content-Type", "application/json")
+        .body(response.to_string().into())?)
 }
