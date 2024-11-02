@@ -18,13 +18,13 @@ const data = {
     navMain: [
         {
             title: 'Contracts',
-            url: '/founder/contracts/genesis',
+            url: '/founder/contracts/request-for-proposal',
             icon: SquareTerminal,
             isActive: true,
             items: [
                 {
-                    title: 'Genesis',
-                    url: '/founder/contracts/genesis',
+                    title: 'Request for Proposal',
+                    url: '/founder/contracts/request-for-proposal',
                 },
                 {
                     title: 'Analytics',
@@ -39,24 +39,25 @@ const data = {
         },
         {
             title: 'Documentation',
-            url: '/founder/documentation',
+            url: 'https://docs.goat.network/',
             icon: BookOpen,
             items: [
                 {
                     title: 'Introduction',
-                    url: '#',
+                    url: 'https://docs.goat.network/',
+                    TargetEvent:`_blank`
                 },
                 {
                     title: 'Get Started',
-                    url: '#',
+                    url: 'https://docs.goat.network/',
                 },
                 {
                     title: 'Tutorials',
-                    url: '#',
+                    url: 'https://docs.goat.network/',
                 },
                 {
                     title: 'Changelog',
-                    url: '#',
+                    url: 'https://docs.goat.network/',
                 },
             ],
         },

@@ -4,6 +4,12 @@ import { MetricCards } from './metric-cards'
 import { AnalyticsCharts } from './analytics-chart'
 import { generateMockData } from '@/lib/analytics'
 import { AnalyticsData } from '@/types/analytics'
+// Removing RealTimeChart import since module not foun
+
+import React from 'react';
+import { PubSubService, PubSubContext } from '@/services/pubsub.service';
+import RealTimeChart from './charts/RealTimeChart';
+
 
 const mockData = generateMockData(365)
 
@@ -31,7 +37,12 @@ export function AnalyticsDashboard() {
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">Analytics Dashboard</h1>
       <div className="mb-6">
-        {/* You can replace the Calendar component with another date range picker if needed */}
+      
+
+      <h1>Real-Time Data Dashboard</h1>
+      <RealTimeChart />
+
+
       </div>
       <MetricCards latestData={latestData} />
       <AnalyticsCharts data={filteredData} />

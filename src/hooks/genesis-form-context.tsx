@@ -1,19 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState } from 'react';
-
-interface ProjectFormState {
-    projectName: string;
-    description: string;
-    website: string;
-    logo: File | null;
-    abiList: Array<{ abi: string; contractAddress: string }>;
-}
-
-interface ProjectFormContextType {
-    formState: ProjectFormState;
-    updateFormState: (updates: Partial<ProjectFormState>) => void;
-}
+import { ProjectFormContextType, ProjectFormState } from '@/types/genesis';
 
 const ProjectFormContext = createContext<ProjectFormContextType | undefined>(undefined);
 
@@ -23,14 +11,29 @@ export function ProjectFormProvider({ children }: { children: React.ReactNode })
         description: '',
         website: '',
         logo: null,
-        abiList: [{ abi: '', contractAddress: '' }],
+        abiList: [{ abi: '', contractAddress: '', contractName: '' }],
+        tags: [],
     });
 
     const updateFormState = (updates: Partial<ProjectFormState>) => {
         setFormState((current) => ({ ...current, ...updates }));
     };
 
-    return <ProjectFormContext.Provider value={{ formState, updateFormState }}>{children}</ProjectFormContext.Provider>;
+    const resetFormState = () => {
+        setFormState({
+            projectName: '',
+            description: '',
+            website: '',
+            logo: null,
+            abiList: [{ abi: '', contractAddress: '', contractName: '' }],
+            tags: [],
+        });
+    };
+
+    const submitForm = async () => {
+        // TODO: Submit form to backend
+    }
+    return <ProjectFormContext.Provider value={{ formState, updateFormState, resetFormState, submitForm }}>{children}</ProjectFormContext.Provider>;
 }
 
 export const useProjectForm = () => {
