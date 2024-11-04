@@ -1,6 +1,16 @@
 
 Certainly! Below is the file tree structure for your Go project, along with a bash script (`run.sh`) to initialize the Go module, install the necessary Go packages, compile the application, and run it. This setup uses GORM for ORM functionality, communicates with a Supabase Postgres database through a GraphQL proxy service, and exposes endpoints on port **6666**.
 
+
+```
+curl -X POST 'https://dxhmpwhtvzvhwznqswek.supabase.co/rest/v1/profiles' \
+-H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4aG1wd2h0dnp2aHd6bnFzd2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA2ODg5OTksImV4cCI6MjA0NjI2NDk5OX0.dKT3nNRhEuU4TsEhXUgMfDHbEDU-TYt6v0cTf0ZQ2CY" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4aG1wd2h0dnp2aHd6bnFzd2VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA2ODg5OTksImV4cCI6MjA0NjI2NDk5OX0.dKT3nNRhEuU4TsEhXUgMfDHbEDU-TYt6v0cTf0ZQ2CY" \
+-H "Content-Type: application/json" \
+-H "Prefer: return=minimal" \
+-d '{  "user_id": "A7361827-C99D-48C6-84BF-1A0F9B2B88EF",  "email": "newuser@example.com",  "wallet_address": "0xabcdef1234567890abcdef1234567890abcdef18",  "unique_name": "dylantrygo", "id":"A7361827-C99D-48C6-84BF-1A0F9B2B88EF" }'
+```
+
 ---
 
 ### **File Tree Structure**

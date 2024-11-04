@@ -22,7 +22,7 @@ func ExecuteGraphQLQuery(query string, variables map[string]interface{}, respons
 		req.Var(key, value)
 	}
 
-	req.Header.Set("Authorization", "Bearer "+os.Getenv("SUPABASE_ANON_KEY"))
+	req.Header.Set("Authorization", "Bearer "+os.Getenv("ANON_API_KEY"))
 
 	if err := graphqlClient.Run(context.Background(), req, &response); err != nil {
 		log.Printf("GraphQL query failed: %v", err)

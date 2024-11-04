@@ -6,17 +6,19 @@ import (
 	"gorm.io/gorm"
 )
 
-// Updated struct to match the profiles table
+// Profile model
 type Profile struct {
-	ID            string `gorm:"primaryKey;type:uuid" json:"id"` // UUID as string
-	UserID        string `gorm:"type:uuid;not null" json:"user_id"`
-	Email         string `json:"email"`
-	WalletAddress string `json:"wallet_address"`
-	UniqueName    string `json:"unique_name"`
-	CreatedAt     string `json:"created_at"` // Use appropriate type for timestamps
-	UpdatedAt     string `json:"updated_at"` // Use appropriate type for timestamps
+	ID            string         `gorm:"type:uuid;default:gen_random_uuid();primaryKey" json:"id"`
+	UserID        string         `gorm:"type:uuid;unique;not null" json:"user_id"`
+	Email         string         `gorm:"type:varchar(255);unique;not null" json:"email"`
+	WalletAddress string         `gorm:"type:varchar(42);unique;not null" json:"wallet_address"`
+	UniqueName    string         `gorm:"type:varchar(100);unique;not null" json:"unique_name"`
+	CreatedAt     time.Time      `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt     time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
+	DeletedAt     gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
+// Project model
 type Project struct {
 	ID        string         `gorm:"type:uuid;default:gen_random_uuid();primaryKey" json:"id"`
 	FounderID string         `gorm:"type:uuid;not null" json:"founder_id"`
@@ -27,4 +29,4 @@ type Project struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
-// Define other models as needed
+// Add other models as needed
