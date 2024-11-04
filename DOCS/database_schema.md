@@ -1,7 +1,6 @@
 
 
 
-I'll restructure the architecture to support this more complex schema. Here's a comprehensive breakdown:
 
 ```typescript
 // 1. CORE DOMAIN ENTITIES
