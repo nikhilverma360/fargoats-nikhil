@@ -42,5 +42,4 @@ yarn-error.log*
 next-env.d.ts
 RUST/farGoat/target/.rustc_info.json
 RUST/farGoat/target/*
-testdata/target
-testdata/target/debug/
+
