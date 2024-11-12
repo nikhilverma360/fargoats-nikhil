@@ -11,6 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import UpcomingEvents from '@/components/ecosystem/quests/Upcomming';
+import UserActivities from '@/components/ecosystem/quests/UserActivities';
 
 // Updated mock data for demonstration
 
@@ -18,6 +20,7 @@ const bounties = [
     {
         id: 1,
         title: 'Boost DAU for DeFi Swap',
+        trending: true,
         type: 'Founder',
         category: 'DAU Increase',
         points: 500,
@@ -34,6 +37,7 @@ const bounties = [
     {
         id: 2,
         title: 'Hodl ETH for 30 Days',
+        trending: true,
         type: 'Community',
         category: 'Hodl Challenge',
         points: 750,
@@ -51,6 +55,7 @@ const bounties = [
     {
         id: 3,
         title: 'Pump TOKEN to $1',
+        trending: true,
         type: 'Founder',
         category: 'Pump Challenge',
         points: 1000,
@@ -68,6 +73,7 @@ const bounties = [
     {
         id: 4,
         title: 'Swap for BTC',
+        trending: false,
         type: 'Community',
         category: 'BTC Challenge',
         points: 600,
@@ -84,6 +90,7 @@ const bounties = [
     {
         id: 5,
         title: 'Increase TOKEN/BTC Volume',
+        trending: false,
         type: 'Founder',
         category: 'Volume Challenge',
         points: 800,
@@ -125,6 +132,7 @@ const analyticsData = [
 interface Bounty {
     id: number;
     title: string;
+    trending: boolean;
     type: string;
     category: string;
     points: number;
@@ -488,6 +496,27 @@ export default function QuestsPage() {
           <HighestRewards />
         </div>
       </div>
+
+    <div className='text-xl font-bold pb-2'> Recommended </div>
+
+    <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-8">
+                {bounties
+                    .filter((bounty) => bounty.trending === true)
+                    .map((bounty) => (
+                            <BountyCard key={bounty.id} bounty={bounty} />
+                    ))}
+    </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <UpcomingEvents/>
+        </div>
+        <div>
+          <UserActivities />
+        </div>
+      </div>
+
+      <div className='text-xl font-bold pb-2'> Explore Quests </div>
         
         <Tabs defaultValue="founder" className="space-y-4">
             <TabsList className="w-full justify-start overflow-x-auto">
