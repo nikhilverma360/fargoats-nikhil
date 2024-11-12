@@ -1,7 +1,25 @@
 "use client";
-import React from 'react';
+import * as React from 'react';
 import Link from 'next/link';
-import { ChevronDownIcon, ArrowUpIcon, ArrowDownIcon, TrophyIcon } from 'lucide-react';
+import { 
+    ChevronDownIcon, 
+    ArrowUpIcon, 
+    ArrowDownIcon, 
+    TrophyIcon,
+    FlameIcon,
+    AwardIcon,
+    ActivityIcon,
+    TrendingUpIcon,
+    UserIcon,
+    StarIcon,
+    CrownIcon,
+    BitcoinIcon
+} from 'lucide-react';
+import {
+    LineChart,
+    Line,
+    ResponsiveContainer
+} from 'recharts';
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -29,50 +47,209 @@ const GOATClubData = [
     {
         title: 'Wallets Most Active by DAU',
         description: 'Top performers based on daily active usage',
+        icon: <ActivityIcon className="w-5 h-5" />,
+        trend: [
+            { day: 'Mon', value: 85 },
+            { day: 'Tue', value: 88 },
+            { day: 'Wed', value: 92 },
+            { day: 'Thu', value: 90 },
+            { day: 'Fri', value: 95 }
+        ],
         wallets: [
-            { address: '0x1234...5678', score: 95, change: 'up', rank: 1 },
-            { address: '0x2345...6789', score: 88, change: 'down', rank: 2 },
-            { address: '0x3456...7890', score: 82, change: 'up', rank: 3 }
+            { 
+                address: '0x1234...5678', 
+                score: 95, 
+                change: 'up', 
+                rank: 1,
+                streak: 7,
+                achievements: ['Early Adopter', 'Power User', 'Trend Setter'],
+                activity: 'Very High'
+            },
+            { 
+                address: '0x2345...6789', 
+                score: 88, 
+                change: 'down', 
+                rank: 2,
+                streak: 5,
+                achievements: ['Consistent Performer', 'Power User'],
+                activity: 'High'
+            },
+            { 
+                address: '0x3456...7890', 
+                score: 82, 
+                change: 'up', 
+                rank: 3,
+                streak: 3,
+                achievements: ['Active User'],
+                activity: 'Moderate'
+            }
         ]
     },
     {
         title: 'Wallets Most Bullish by TRX',
         description: 'Most optimistic wallets by transaction volume',
+        icon: <TrendingUpIcon className="w-5 h-5" />,
+        trend: [
+            { day: 'Mon', value: 80 },
+            { day: 'Tue', value: 82 },
+            { day: 'Wed', value: 85 },
+            { day: 'Thu', value: 87 },
+            { day: 'Fri', value: 92 }
+        ],
         wallets: [
-            { address: '0x4567...8901', score: 92, change: 'up', rank: 1 },
-            { address: '0x5678...9012', score: 85, change: 'up', rank: 2 },
-            { address: '0x6789...0123', score: 79, change: 'down', rank: 3 }
+            { 
+                address: '0x4567...8901', 
+                score: 92, 
+                change: 'up', 
+                rank: 1,
+                streak: 6,
+                achievements: ['High Roller', 'Top Investor'],
+                activity: 'High'
+            },
+            { 
+                address: '0x5678...9012', 
+                score: 85, 
+                change: 'up', 
+                rank: 2,
+                streak: 4,
+                achievements: ['Bullish Investor'],
+                activity: 'Moderate'
+            },
+            { 
+                address: '0x6789...0123', 
+                score: 79, 
+                change: 'down', 
+                rank: 3,
+                streak: 2,
+                achievements: ['Steady Trader'],
+                activity: 'Low'
+            }
         ]
     },
     {
         title: 'Wallets Whales by TVL',
         description: 'Top wallets by total value locked',
+        icon: <TrendingUpIcon className="w-5 h-5" />,
+        trend: [
+            { day: 'Mon', value: 98 },
+            { day: 'Tue', value: 97 },
+            { day: 'Wed', value: 99 },
+            { day: 'Thu', value: 100 },
+            { day: 'Fri', value: 100 }
+        ],
         wallets: [
-            { address: '0x7890...1234', score: 100, change: 'up', rank: 1 },
-            { address: '0x8901...2345', score: 95, change: 'stable', rank: 2 },
-            { address: '0x9012...3456', score: 90, change: 'down', rank: 3 }
+            { 
+                address: '0x7890...1234', 
+                score: 100, 
+                change: 'up', 
+                rank: 1,
+                streak: 10,
+                achievements: ['Top Whale', 'Investor Elite'],
+                activity: 'Very High'
+            },
+            { 
+                address: '0x8901...2345', 
+                score: 95, 
+                change: 'stable', 
+                rank: 2,
+                streak: 8,
+                achievements: ['Whale'],
+                activity: 'High'
+            },
+            { 
+                address: '0x9012...3456', 
+                score: 90, 
+                change: 'down', 
+                rank: 3,
+                streak: 6,
+                achievements: ['Significant Investor'],
+                activity: 'Moderate'
+            }
         ]
     },
     {
         title: 'Wallets with Most Quest Points',
         description: 'Leading wallets by quest completion points',
+        icon: <TrendingUpIcon className="w-5 h-5" />,
+        trend: [
+            { day: 'Mon', value: 84 },
+            { day: 'Tue', value: 86 },
+            { day: 'Wed', value: 87 },
+            { day: 'Thu', value: 89 },
+            { day: 'Fri', value: 91 }
+        ],
         wallets: [
-            { address: '0x0123...4567', score: 87, change: 'up', rank: 1 },
-            { address: '0x1234...5678', score: 84, change: 'down', rank: 2 },
-            { address: '0x2345...6789', score: 80, change: 'up', rank: 3 }
+            { 
+                address: '0x0123...4567', 
+                score: 87, 
+                change: 'up', 
+                rank: 1,
+                streak: 9,
+                achievements: ['Quest Master', 'Goal Achiever'],
+                activity: 'High'
+            },
+            { 
+                address: '0x1234...5678', 
+                score: 84, 
+                change: 'down', 
+                rank: 2,
+                streak: 5,
+                achievements: ['Quest Enthusiast'],
+                activity: 'Moderate'
+            },
+            { 
+                address: '0x2345...6789', 
+                score: 80, 
+                change: 'up', 
+                rank: 3,
+                streak: 4,
+                achievements: ['Consistent Achiever'],
+                activity: 'Low'
+            }
         ]
     },
     {
         title: 'Wallets with the Most BTC',
         description: 'Wallets with the highest Bitcoin holdings',
+        icon: <BitcoinIcon className="w-5 h-5" />,
+        trend: [
+            { day: 'Mon', value: 96 },
+            { day: 'Tue', value: 98 },
+            { day: 'Wed', value: 97 },
+            { day: 'Thu', value: 99 },
+            { day: 'Fri', value: 98 }
+        ],
         wallets: [
-            { address: '0x3456...7890', score: 98, change: 'up', rank: 1 },
-            { address: '0x4567...8901', score: 93, change: 'stable', rank: 2 },
-            { address: '0x5678...9012', score: 89, change: 'down', rank: 3 }
+            { 
+                address: '0x3456...7890', 
+                score: 98, 
+                change: 'up', 
+                rank: 1,
+                streak: 8,
+                achievements: ['Bitcoin Whale', 'Top Holder'],
+                activity: 'Very High'
+            },
+            { 
+                address: '0x4567...8901', 
+                score: 93, 
+                change: 'stable', 
+                rank: 2,
+                streak: 6,
+                achievements: ['Significant BTC Holder'],
+                activity: 'High'
+            },
+            { 
+                address: '0x5678...9012', 
+                score: 89, 
+                change: 'down', 
+                rank: 3,
+                streak: 4,
+                achievements: ['BTC Investor'],
+                activity: 'Moderate'
+            }
         ]
     }
 ];
-
 // Project data
 const projectData: Project[] = [
     {
@@ -275,35 +452,108 @@ const questLeaderboardColumns: ColumnDef<QuestLeaderboardEntry>[] = [
     },
 ];
 
+// Achievement Badge Component
+const AchievementBadge = ({ title, icon }) => (
+    <div className="flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-[#FFE155] to-[#FFE155] text-black rounded-full text-xs">
+        {icon}
+        <span>{title}</span>
+    </div>
+);
+
+// Streak Indicator Component
+const StreakIndicator = ({ days }) => (
+    <div className="flex items-center gap-1 text-orange-500">
+        <FlameIcon className="w-4 h-4" />
+        <span className="text-sm font-medium">{days} day streak!</span>
+    </div>
+);
+
+// Activity Sparkline
+const ActivitySparkline = ({ data }) => (
+    <div className="h-12">
+        <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data}>
+                <Line 
+                    type="monotone" 
+                    dataKey="value" 
+                    stroke="#242424" 
+                    strokeWidth={2} 
+                    dot={false}
+                />
+            </LineChart>
+        </ResponsiveContainer>
+    </div>
+);
+
+// Enhanced Leader Card Component
 const LeaderCard = ({ category }) => {
     return (
-        <Card className="hover:shadow-lg transition-shadow duration-200">
+        <Card className="hover:shadow-lg transition-all duration-200">
             <CardHeader className="space-y-1">
                 <div className="flex items-center justify-between">
-                    <CardTitle className="text-xl font-bold">{category.title}</CardTitle>
+                    <div className="flex items-center gap-2">
+                        <div className="p-2 bg-yellow-400 rounded-lg">
+                            {category.icon}
+                        </div>
+                        <CardTitle className="text-xl font-bold">{category.title}</CardTitle>
+                    </div>
                     <TrophyIcon className="w-6 h-6 text-yellow-500" />
                 </div>
                 <CardDescription>{category.description}</CardDescription>
+                <ActivitySparkline data={category.trend} />
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
                     {category.wallets.map((wallet, index) => (
-                        <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100">
-                            <div className="flex items-center space-x-3">
-                                <Badge variant={index === 0 ? "default" : "secondary"} className="w-6 h-6 rounded-full flex items-center justify-center">
-                                    {wallet.rank}
-                                </Badge>
-                                <Link href={`/profile/${wallet.address}`} className="text-blue-600 hover:underline font-mono">
-                                    {wallet.address}
-                                </Link>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <span className="font-bold">{wallet.score}</span>
-                                {wallet.change === 'up' ? (
-                                    <ArrowUpIcon className="w-4 h-4 text-green-500" />
-                                ) : (
-                                    <ArrowDownIcon className="w-4 h-4 text-red-500" />
-                                )}
+                        <div key={index} className="relative">
+                            {index === 0 && (
+                                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                                    <CrownIcon className="w-6 h-6 text-yellow-500" />
+                                </div>
+                            )}
+                            <div className="flex flex-col p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                                <div className="flex items-center justify-between mb-2">
+                                    <div className="flex items-center space-x-3">
+                                        <Badge 
+                                            variant={index === 0 ? "default" : "secondary"} 
+                                            className="w-6 h-6 rounded-full flex items-center justify-center"
+                                        >
+                                            {wallet.rank}
+                                        </Badge>
+                                        <Link 
+                                            href={`/profile/${wallet.address}`} 
+                                            className="text-blue-600 hover:underline font-mono"
+                                        >
+                                            {wallet.address}
+                                        </Link>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <span className="font-bold">{wallet.score}</span>
+                                        {wallet.change === 'up' ? (
+                                            <ArrowUpIcon className="w-4 h-4 text-green-500" />
+                                        ) : (
+                                            <ArrowDownIcon className="w-4 h-4 text-red-500" />
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    {wallet.streak > 0 && (
+                                        <StreakIndicator days={wallet.streak} />
+                                    )}
+                                    <div className="flex flex-wrap gap-1">
+                                        {wallet.achievements.map((achievement, i) => (
+                                            <AchievementBadge 
+                                                key={i} 
+                                                title={achievement} 
+                                                icon={<StarIcon className="w-3 h-3" />} 
+                                            />
+                                        ))}
+                                    </div>
+                                    <div className="flex items-center gap-1 text-sm text-gray-600">
+                                        <UserIcon className="w-4 h-4" />
+                                        <span>Activity: {wallet.activity}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -465,6 +715,40 @@ function DataTable<TData, TValue>({
     );
 }
 
+// Stats Overview Component
+const StatsOverview = () => {
+    const stats = [
+        { title: "Total Participants", value: "12.5K", icon: <UserIcon />, change: "+12%" },
+        { title: "Active Wallets", value: "8.2K", icon: <ActivityIcon />, change: "+5%" },
+        { title: "Total Rewards", value: "1.2M", icon: <AwardIcon />, change: "+8%" },
+        { title: "Competition Score", value: "92", icon: <TrendingUpIcon />, change: "+3%" }
+    ];
+
+    return (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {stats.map((stat, index) => (
+                <Card key={index}>
+                    <CardContent className="flex flex-col gap-3 pt-6">
+                        <div className="flex items-center justify-between">
+                            <div className="p-2 bg-purple-100 rounded-lg">
+                                {React.cloneElement(stat.icon, { className: "w-5 h-5 text-purple-600" })}
+                            </div>
+                            <Badge variant="outline" className="text-green-600">
+                                {stat.change}
+                            </Badge>
+                        </div>
+                        <div>
+                            <p className="text-sm text-gray-600">{stat.title}</p>
+                            <p className="text-2xl font-bold">{stat.value}</p>
+                        </div>
+                    </CardContent>
+                </Card>
+            ))}
+        </div>
+    );
+};
+
+// Enhanced Main Component
 export default function LeaderboardPage() {
     const [progress] = React.useState(85);
 
@@ -477,12 +761,22 @@ export default function LeaderboardPage() {
                 </p>
             </div>
             
-            <Card className="bg-gradient-to-r from-[#B58F3B] to-[#FAF186] text-black">
+            <StatsOverview />
+
+            <Card className="bg-gray-100 text-black">
                 <CardHeader>
-                    <CardTitle>Current Season Progress</CardTitle>
-                    <CardDescription className="text-gray-100">
-                        Season 1 - 2024 Q1
-                    </CardDescription>
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <CardTitle>Current Season Progress</CardTitle>
+                            <CardDescription className="text-black/60">
+                                Season 1 - 2024 Q1
+                            </CardDescription>
+                        </div>
+                        <div className="flex items-center gap-2 bg-yellow-400 px-3 py-1 rounded-full">
+                            <TrophyIcon className="w-4 h-4" />
+                            <span className="text-sm font-medium">12 Days Left</span>
+                        </div>
+                    </div>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-2">
@@ -490,7 +784,11 @@ export default function LeaderboardPage() {
                             <span>Progress</span>
                             <span>{progress}%</span>
                         </div>
-                        <Progress value={progress} className="bg-blue-200" />
+                        <Progress value={progress} className="bg-blue-100" />
+                        <div className="flex justify-between text-sm text-black/60 mt-2">
+                            <span>Current Points: 8,532</span>
+                            <span>Next Reward: 10,000</span>
+                        </div>
                     </div>
                 </CardContent>
             </Card>
