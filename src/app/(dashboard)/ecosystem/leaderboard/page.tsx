@@ -453,7 +453,7 @@ const questLeaderboardColumns: ColumnDef<QuestLeaderboardEntry>[] = [
 ];
 
 // Achievement Badge Component
-const AchievementBadge = ({ title, icon }) => (
+const AchievementBadge = ({ title, icon }: { title: string; icon: React.ReactNode }) => (
     <div className="flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-[#FFE155] to-[#FFE155] text-black rounded-full text-xs">
         {icon}
         <span>{title}</span>
@@ -461,7 +461,7 @@ const AchievementBadge = ({ title, icon }) => (
 );
 
 // Streak Indicator Component
-const StreakIndicator = ({ days }) => (
+const StreakIndicator = ({ days }: { days: number }) => (
     <div className="flex items-center gap-1 text-orange-500">
         <FlameIcon className="w-4 h-4" />
         <span className="text-sm font-medium">{days} day streak!</span>
@@ -469,7 +469,7 @@ const StreakIndicator = ({ days }) => (
 );
 
 // Activity Sparkline
-const ActivitySparkline = ({ data }) => (
+const ActivitySparkline = ({ data }: { data: { day: string; value: number }[] }) => (
     <div className="h-12">
         <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
@@ -486,7 +486,23 @@ const ActivitySparkline = ({ data }) => (
 );
 
 // Enhanced Leader Card Component
-const LeaderCard = ({ category }) => {
+type Category = {
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    trend: { day: string; value: number }[];
+    wallets: {
+        address: string;
+        score: number;
+        change: string;
+        rank: number;
+        streak: number;
+        achievements: string[];
+        activity: string;
+    }[];
+};
+
+const LeaderCard = ({ category }: { category: Category }) => {
     return (
         <Card className="hover:shadow-lg transition-all duration-200">
             <CardHeader className="space-y-1">
@@ -608,7 +624,7 @@ function DataTable<TData, TValue>({
                             placeholder="Filter entries..."
                             className="max-w-sm"
                             onChange={(event) =>
-                                table.getColumn(columns[0].accessorKey as string)?.setFilterValue(event.target.value)
+                                table.getColumn(columns[0].id ?? '')?.setFilterValue(event.target.value)
                             }
                         />
                         <Badge variant="outline" className="h-8 px-3">
